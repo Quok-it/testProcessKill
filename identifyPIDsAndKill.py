@@ -54,30 +54,41 @@ class GPUProcessManager:
 
         return processes
 
-    def processes_to_kill(self, process_name_filter=None): # TODO: flesh this out more
+    def processes_to_kill(self, process_name_filter=None, memory_threshold=None):  
         """
-        Filters processes to kill based on our criteria.
-        
-        process_name_filter (optional): don't include these to kill
-        
-        Return list of PIDs to be killed. 
+        filter processes to kill based on:
+        - process_name_filter: Don't kill if name contains any of these substrings
+        - memory_threshold: Don't kill if memory usage is below this threshold (in MiB)
+
+        return list of PIDs to be killed.
         """
+
         pids_to_kill = []
         pids_not_to_kill = []
         
         for pid, info in self.processes.items():
             process_name = info["Process Name"]
+            memory_usage_str = info["Memory Usage"]
 
+            # convert memory usage to int (remove "MiB" and convert)
+            memory_usage = int(memory_usage_str.replace("MiB", "").strip())
+
+            # don't kill these processes
             if process_name_filter and any(proc in process_name for proc in process_name_filter):
                 pids_not_to_kill.append(pid)
-                continue  # skip if don't wanna kill process
+                continue 
+            
+            if memory_threshold is not None and memory_usage < memory_threshold:
+                pids_not_to_kill.append(pid)
+                continue 
 
+            # else add to kill list
             pids_to_kill.append(pid)
 
-        print(f"pids to kill: {pids_to_kill}")
-        print(f"pids not to kill: {pids_not_to_kill}")
-        return pids_to_kill
+        print(f"PIDs to kill: {pids_to_kill}")
+        print(f"PIDs NOT to kill: {pids_not_to_kill}")
         
+        return pids_to_kill
 
     def kill_processes(self, pids_to_kill): 
         """
