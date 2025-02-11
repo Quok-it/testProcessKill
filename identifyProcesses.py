@@ -53,4 +53,4 @@ if __name__ == "__main__":
 
     # save to file (PIDs separated by commas)
     with open("gpu_pids.txt", "w") as f:
-        f.write(",".join(gpu_processes.keys()))
+        f.write("\n".join(gpu_processes.keys()))
