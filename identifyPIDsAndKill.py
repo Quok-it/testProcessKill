@@ -65,11 +65,13 @@ class GPUProcessManager:
         Return list of PIDs to be killed. 
         """
         pids_to_kill = []
+        pids_not_to_kill = []
         
         for pid, info in self.processes.items():
             process_name = info["Process Name"]
 
             if process_name_filter and any(proc in process_name for proc in process_name_filter):
+                pids_not_to_kill.append(pid)
                 continue  # skip if don't wanna kill process
 
             pids_to_kill.append(pid)
