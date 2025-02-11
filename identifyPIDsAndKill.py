@@ -54,7 +54,7 @@ class GPUProcessManager:
 
         return processes
 
-    def processes_to_kill(self, process_name_filter=None): # TODO: what to filter? should it be based on mem usage?
+    def processes_to_kill(self, process_name_filter=None): # TODO: flesh this out more
         """
         Filters processes to kill based on our criteria.
         
@@ -79,7 +79,7 @@ class GPUProcessManager:
         return pids_to_kill
         
 
-    def kill_processes(self, pids_to_kill):
+    def kill_processes(self, pids_to_kill): 
         """
         Kill all processes that have been flagged using `sudo kill -9 <PID>`.
         """
@@ -113,6 +113,6 @@ if __name__ == "__main__":
     pids_to_terminate = gpu_manager.processes_to_kill(process_name_filter=process_name_filter)
 
     # Kill processes
-    # gpu_manager.kill_processes(pids_to_terminate)
+    gpu_manager.kill_processes(pids_to_terminate)
         
 # call this Python file from an API in the backend
