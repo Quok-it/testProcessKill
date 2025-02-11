@@ -34,7 +34,9 @@ def get_gpu_processes():
             if len(parts) >= 6:
                 pid = parts[4]  # PID at index 4
                 process_info = {
-                    "GPU": parts[0],
+                    "GPU": parts[1],
+                    "GI ID": parts[2],
+                    "CI ID": parts[3],
                     "Type": parts[5],
                     "Process Name": " ".join(parts[6:]),
                     "Memory Usage": parts[-2] + " " + parts[-1]
