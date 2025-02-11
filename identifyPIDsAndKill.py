@@ -76,6 +76,8 @@ class GPUProcessManager:
 
             pids_to_kill.append(pid)
 
+        print(f"pids to kill: {pids_to_kill}")
+        print(f"pids not to kill: {pids_not_to_kill}")
         return pids_to_kill
         
 
