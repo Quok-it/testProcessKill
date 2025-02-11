@@ -38,8 +38,8 @@ def get_gpu_processes():
                     "GI ID": parts[2],
                     "CI ID": parts[3],
                     "Type": parts[5],
-                    "Process Name": " ".join(parts[6:]),
-                    "Memory Usage": parts[-2] + " " + parts[-1]
+                    "Process Name": " ".join(parts[6:-2]),
+                    "Memory Usage": parts[-2]
                 }
                 processes[pid] = process_info
 
