@@ -30,9 +30,8 @@ def get_gpu_processes():
         # get process info
         if process_section and line:
             parts = line.split()
-            print(parts)
             if len(parts) >= 6:
-                pid = parts[4]  # PID at index 4
+                pid = parts[4]  # PID at index 4 (key)
                 process_info = {
                     "GPU": parts[1],
                     "GI ID": parts[2],
@@ -52,6 +51,6 @@ if __name__ == "__main__":
     for pid, info in gpu_processes.items():
         print(f"PID: {pid} -> {info}")
 
-    # # Save to a file (PIDs separated by commas)
-    # with open("gpu_pids.txt", "w") as f:
-    #     f.write(",".join(gpu_processes.keys()))
+    # save to file (PIDs separated by commas)
+    with open("gpu_pids.txt", "w") as f:
+        f.write(",".join(gpu_processes.keys()))
