@@ -30,6 +30,7 @@ def get_gpu_processes():
         # get process info
         if process_section and line:
             parts = line.split()
+            print(parts)
             if len(parts) >= 6:
                 pid = parts[4]  # PID at index 4
                 process_info = {
