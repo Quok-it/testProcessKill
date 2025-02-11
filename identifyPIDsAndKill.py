@@ -39,20 +39,18 @@ class GPUProcessManager:
 
             # get process info
             if process_section and line:
-                match = re.match(
-                    r"\s*(?P<GPU>\d+)\s+(?P<GI_ID>\S+)\s+(?P<CI_ID>\S+)\s+(?P<PID>\d+)\s+(?P<Type>\S+)\s+(?P<Process_Name>.+?)\s+(?P<Memory_Usage>\d+MiB)",
-                    line
-                )
-                if match:
-                    pid = match.group("PID")
-                    processes[pid] = {
-                        "GPU": match.group("GPU"),
-                        "GI ID": match.group("GI_ID"),
-                        "CI_ID": match.group("CI_ID"),
-                        "Type": match.group("Type"),
-                        "Process Name": match.group("Process_Name").strip(),
-                        "Memory Usage": match.group("Memory_Usage")
+                parts = line.split()
+                if len(parts) >= 6:
+                    pid = parts[4]  # PID at index 4 (key)
+                    process_info = {
+                        "GPU": parts[1],
+                        "GI ID": parts[2],
+                        "CI ID": parts[3],
+                        "Type": parts[5],
+                        "Process Name": " ".join(parts[6:-2]),
+                        "Memory Usage": parts[-2]
                     }
+                    processes[pid] = process_info
 
         return processes
 
